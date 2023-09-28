@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:quiz_app/data/questions.dart';
 import 'package:quiz_app/option_button.dart';
 
 class QuestionScreen extends StatefulWidget {
-  const QuestionScreen({super.key});
+  final void Function(String answer) onSelectAnswer;
+
+  const QuestionScreen({super.key, required this.onSelectAnswer});
 
   @override
   State<QuestionScreen> createState() => _QuestionScreen();
@@ -12,17 +15,15 @@ class QuestionScreen extends StatefulWidget {
 class _QuestionScreen extends State<QuestionScreen> {
   var currentQuestionIndex = 0;
 
-  void answerQuestion() {
-
+  void answerQuestion(String answer) {
+    widget.onSelectAnswer(answer);
     setState(() {
       currentQuestionIndex++;
     });
-
   }
 
   @override
   Widget build(BuildContext context) {
-
     var currentQuestion = questions[currentQuestionIndex];
     return SizedBox(
       width: double.infinity,
@@ -34,13 +35,18 @@ class _QuestionScreen extends State<QuestionScreen> {
           children: [
             Text(
               currentQuestion.question,
-              style: const TextStyle(color: Colors.white, fontSize: 16),
+              style: GoogleFonts.poppins(
+                  color: const Color.fromARGB(190, 255, 255, 255),
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
             const Padding(padding: EdgeInsets.only(top: 20)),
-            ...currentQuestion
-                .getShuffeledAnswers()
-                .map((e) => OptionButton(selectAnswer: answerQuestion, text: e)),
+            ...currentQuestion.getShuffeledAnswers().map((e) => OptionButton(
+                selectAnswer: () {
+                  answerQuestion(e);
+                },
+                text: e)),
           ],
         ),
       ),
