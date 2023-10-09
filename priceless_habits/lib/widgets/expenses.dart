@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:priceless_habits/widgets/expense_list/expenses_list.dart';
 import 'package:priceless_habits/models/expense.dart';
+import 'package:priceless_habits/widgets/expense_list/expenses_list.dart';
+import 'package:priceless_habits/widgets/new_expense.dart';
 
 class Expenses extends StatefulWidget {
   const Expenses({super.key});
@@ -30,13 +31,48 @@ class _ExpensesState extends State<Expenses> {
         category: Category.food),
   ];
 
+  void _openExpenseOverlay() async {
+    Expense newExpense = await showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (ctx) => const NewExpense());
+    setState(() {
+      _registeredExpenses.add(newExpense);
+    });
+  }
+
+  void removeExpense(Expense expense) {
+    setState(() {
+      _registeredExpenses.remove(expense);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    Widget mainContent = const Center(
+      child: Text("Tihs is a placeholder"),
+    );
+
+    if(_registeredExpenses.isNotEmpty) {
+      mainContent = ExpensesList(
+        expenses: _registeredExpenses,
+        removeExpenseCaller: removeExpense,
+      );
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Debt reinvented"),
+        actions: [
+          IconButton(
+              onPressed: _openExpenseOverlay, icon: const Icon(Icons.add))
+        ],
+      ),
       body: Column(
         children: [
           const Text("The chart"),
-          Expanded(child: ExpensesList(expenses: _registeredExpenses)),
+          Expanded(
+              child: mainContent),
         ],
       ),
     );
