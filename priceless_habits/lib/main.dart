@@ -4,10 +4,13 @@ import 'package:priceless_habits/widgets/expenses.dart';
 var kColorScheme =
     ColorScheme.fromSeed(seedColor: const Color.fromARGB(255, 205, 155, 255));
 
-var kColorSchemeDarkMode =
-    ColorScheme.fromSeed(brightness: Brightness.dark,  seedColor: const Color.fromARGB(255, 5, 99, 125));
+var kColorSchemeDarkMode = ColorScheme.fromSeed(
+    brightness: Brightness.dark,
+    seedColor: const Color.fromARGB(255, 5, 99, 125));
 
 void main() {
+  // WidgetsFlutterBinding.ensureInitialized();
+
   runApp(
     MaterialApp(
         home: const Expenses(),
@@ -16,7 +19,7 @@ void main() {
             useMaterial3: true,
             colorScheme: kColorSchemeDarkMode,
             cardTheme: const CardTheme().copyWith(
-              color: kColorSchemeDarkMode.secondaryContainer,
+                color: kColorSchemeDarkMode .secondaryContainer,
                 margin:
                     const EdgeInsets.symmetric(vertical: 10, horizontal: 8))),
         theme: ThemeData().copyWith(

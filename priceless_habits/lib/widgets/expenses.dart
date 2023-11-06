@@ -51,11 +51,13 @@ class _ExpensesState extends State<Expenses> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: const Text("Let the IRS figure that one out"),
       duration: const Duration(seconds: 3),
-      action: SnackBarAction(label: "maybe not?", onPressed: () {
-        setState(() {
-          _registeredExpenses.insert(index, expense);
-        });
-      }),
+      action: SnackBarAction(
+          label: "maybe not?",
+          onPressed: () {
+            setState(() {
+              _registeredExpenses.insert(index, expense);
+            });
+          }),
     ));
   }
 
@@ -80,12 +82,20 @@ class _ExpensesState extends State<Expenses> {
               onPressed: _openExpenseOverlay, icon: const Icon(Icons.add))
         ],
       ),
-      body: Column(
-        children: [
-          Chart(expenses: _registeredExpenses),
-          Expanded(child: mainContent),
-        ],
-      ),
+      body:
+          MediaQuery.of(context).size.width > MediaQuery.of(context).size.height
+              ? Row(
+                  children: [
+                    Expanded(child: Chart(expenses: _registeredExpenses)),
+                    Expanded(child: mainContent),
+                  ],
+                )
+              : Column(
+                  children: [
+                    Expanded(child: Chart(expenses: _registeredExpenses)),
+                    Expanded(child: mainContent),
+                  ],
+                ),
     );
   }
 }
