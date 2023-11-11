@@ -33,13 +33,16 @@ class _ExpensesState extends State<Expenses> {
   ];
 
   void _openExpenseOverlay() async {
-    Expense newExpense = await showModalBottomSheet(
+    Expense? newExpense = await showModalBottomSheet(
+        // useSafeArea: true,
         isScrollControlled: true,
         context: context,
         builder: (ctx) => const NewExpense());
-    setState(() {
-      _registeredExpenses.add(newExpense);
-    });
+    if (newExpense != null) {
+      setState(() {
+        _registeredExpenses.add(newExpense);
+      });
+    }
   }
 
   void removeExpense(Expense expense) {
