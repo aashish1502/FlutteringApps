@@ -1,4 +1,5 @@
 import 'package:cooking_methods/models/meal.dart';
+import 'package:cooking_methods/widgets/mealItem.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,7 @@ class MealsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget content = ListView.builder(
       itemCount: meals.length,
-        itemBuilder: (ctx, idx) => Text(meals[idx].title));
+        itemBuilder: (ctx, idx) => MealItem(meal: meals[idx]));
 
     if (meals.isEmpty) {
       content = Center(
