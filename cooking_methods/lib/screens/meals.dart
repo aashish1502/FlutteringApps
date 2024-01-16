@@ -4,9 +4,9 @@ import 'package:cooking_methods/widgets/mealItem.dart';
 import 'package:flutter/material.dart';
 
 class MealsScreen extends StatelessWidget {
-  const MealsScreen({super.key, required this.title, required this.meals});
+  const MealsScreen({super.key, this.title, required this.meals});
 
-  final String title;
+  final String? title;
   final List<Meal> meals;
 
   void _selectMeal(BuildContext context, Meal mealToBeShown) {
@@ -48,9 +48,13 @@ class MealsScreen extends StatelessWidget {
       );
     }
 
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: Container(child: content),
-    );
+    if (title == null) {
+      return Container(child: content);
+    } else {
+      return Scaffold(
+        appBar: AppBar(title: Text(title!)),
+        body: Container(child: content),
+      );
+    }
   }
 }

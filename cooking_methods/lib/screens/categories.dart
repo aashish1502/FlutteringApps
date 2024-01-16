@@ -8,8 +8,9 @@ class CategoryScreen extends StatelessWidget {
   const CategoryScreen({super.key});
 
   void _selectCategory(BuildContext context, Category category) {
-    final filteredMeals =
-        dummyMeals.where((meal) => meal.categories.contains(category.id)).toList();
+    final filteredMeals = dummyMeals
+        .where((meal) => meal.categories.contains(category.id))
+        .toList();
 
     Navigator.push(
         context,
@@ -20,27 +21,22 @@ class CategoryScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Pick your Category"),
-      ),
-      body: GridView(
-        padding: const EdgeInsets.all(16),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 3 / 2,
-            crossAxisSpacing: 20,
-            mainAxisSpacing: 20),
-        children: [
-          for (final category in availableCategories)
-            CategoryGridItem(
-              category: category,
-              slectCategory: () {
-                _selectCategory(context, category);
-              },
-            )
-        ],
-      ),
+    return GridView(
+      padding: const EdgeInsets.all(16),
+      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: 3 / 2,
+          crossAxisSpacing: 20,
+          mainAxisSpacing: 20),
+      children: [
+        for (final category in availableCategories)
+          CategoryGridItem(
+            category: category,
+            slectCategory: () {
+              _selectCategory(context, category);
+            },
+          )
+      ],
     );
   }
 }

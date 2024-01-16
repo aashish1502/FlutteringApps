@@ -1,34 +1,26 @@
-
 // import 'dart:html';
-import 'package:cooking_methods/screens/categories.dart';
+import 'package:cooking_methods/screens/tabs.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 final theme = ThemeData(
-  useMaterial3: true,
-  colorScheme: ColorScheme.fromSeed(
-    brightness: Brightness.dark,
-    seedColor: const Color(0xffB1B2FF)
-  ),
-  textTheme: GoogleFonts.montserratTextTheme()
-);
+    useMaterial3: true,
+    colorScheme: ColorScheme.fromSeed(
+        brightness: Brightness.dark, seedColor: const Color(0xffB1B2FF)),
+    textTheme: GoogleFonts.montserratTextTheme());
 
 void main() {
   runApp(const App());
 }
 
 class App extends StatelessWidget {
-
-   const App({super.key});
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
       theme: theme,
-      home: const CategoryScreen(),
+      home: const TabsScreen(),
     );
-
   }
-
 }
