@@ -2,15 +2,25 @@ import 'package:cooking_methods/models/meal.dart';
 import 'package:flutter/material.dart';
 
 class MealDetail extends StatelessWidget {
-  const MealDetail({super.key, required this.mealToBeShown});
+  const MealDetail(
+      {super.key, required this.mealToBeShown, required this.onToggleFavorite});
 
   final Meal mealToBeShown;
+  final void Function(Meal meal) onToggleFavorite;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(mealToBeShown.title),
+        actions: [
+          IconButton(
+            onPressed: () {
+              onToggleFavorite(mealToBeShown);
+            },
+            icon: const Icon(Icons.favorite),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -37,11 +47,9 @@ class MealDetail extends StatelessWidget {
                       color: Theme.of(context).colorScheme.onBackground,
                     ),
               ),
-
             const SizedBox(
               height: 26,
             ),
-
             Text(
               "Steps",
               style: Theme.of(context).textTheme.titleLarge!.copyWith(
