@@ -1,5 +1,7 @@
 import 'package:cooking_methods/screens/categories.dart';
+import 'package:cooking_methods/screens/filters.dart';
 import 'package:cooking_methods/screens/meals.dart';
+import 'package:cooking_methods/widgets/mainDrawer.dart';
 import 'package:flutter/material.dart';
 
 import '../models/meal.dart';
@@ -18,11 +20,27 @@ class _TabsScreen extends State<TabsScreen> {
 
   final List<Meal> _favoriteMeals = [];
 
+  void _showInfoMessage(String message) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(milliseconds: 500),
+      ),
+    );
+  }
+
   void _toggleMealFavoriteStatus(Meal meal) {
     if (_favoriteMeals.contains(meal)) {
-      _favoriteMeals.remove(meal);
+      setState(() {
+        _favoriteMeals.remove(meal);
+        _showInfoMessage("Meal is no longer favorite favorite");
+      });
     } else {
-      _favoriteMeals.add(meal);
+      setState(() {
+        _favoriteMeals.add(meal);
+        _showInfoMessage("Meal has been set to favorite");
+      });
     }
   }
 
@@ -30,6 +48,14 @@ class _TabsScreen extends State<TabsScreen> {
     setState(() {
       _selectedPageIndex = index;
     });
+  }
+
+  void _setScreen(String identifier) {
+    Navigator.of(context).pop();
+    if (identifier == 'filter') {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (ctx) => FilterScreen()));
+    }
   }
 
   @override
@@ -48,6 +74,9 @@ class _TabsScreen extends State<TabsScreen> {
     }
 
     return Scaffold(
+      drawer: MainDrawer(
+        onSelectScreen: _setScreen,
+      ),
       appBar: AppBar(
         title: Text(activeScreenTitle),
       ),
