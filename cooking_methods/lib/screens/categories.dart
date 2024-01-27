@@ -7,10 +7,12 @@ import 'package:flutter/material.dart';
 import '../models/meal.dart';
 
 class CategoryScreen extends StatelessWidget {
-  const CategoryScreen({super.key, required this.onToggleMeal});
+  const CategoryScreen({super.key, required this.onToggleMeal, required this.availableMeals});
   final void Function(Meal meal) onToggleMeal;
+  final List<Meal> availableMeals;
+
   void _selectCategory(BuildContext context, Category category) {
-    final filteredMeals = dummyMeals
+    final filteredMeals = availableMeals
         .where((meal) => meal.categories.contains(category.id))
         .toList();
 
